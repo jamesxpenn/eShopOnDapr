@@ -1,0 +1,47 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: mall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+    gateway:
+      routes:
+        - id: mall_route
+          uri: lb://mall-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
+        - id: product_route
+          uri: lb://mall-product
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
+        - id: cart_route
+          uri: lb://mall-cart
+          predicates:
+            - Path=/api/carts/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
+        - id: shipping_route
+          uri: lb://mall-shipping
+          predicates:
+            - Path=/api/shippings/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
+        - id: order_route
+          uri: lb://mall-order
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
+        - id: pay_route
+          uri: lb://mall-pay
+          predicates:
+            - Path=/api/pay/**
+          filters:
+            - RewritePath=/api(?<segment>.*),/$\{segment}
