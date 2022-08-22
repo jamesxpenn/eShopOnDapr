@@ -2,6 +2,32 @@
 
      mall是一个java版本的分布式应用程序**在线商城**。它的后端是由spring cloud开发，前端由vue开发。我们会一步一步带着大家将此项目改造成dapr项目。之所以考虑通过spring cloud作为切入点去介绍dapr，是因为spring cloud是目前国内进行微服务开发使用最多的框架。
 
+![](doc/images/mall1.png)
+
+
+
+![](doc/images/mall2.png)
+
+
+
+![](doc/images/mall3.png)
+
+
+
+![](doc/images/mall4.png)
+
+
+
+![](doc/images/mall5.png)
+
+
+
+![](doc/images/mall6.png)
+
+
+
+![](doc/images/mall7.png)
+
     Dapr允许使用任何语言或框架的开发人员能够轻松编写微服务。它解决了分布式应用程序带来的许多挑战，例如：
 
 - 分布式服务如何相互发现并同步通信？
@@ -42,6 +68,8 @@
 
 最后，事件总线支持跨微服务进行异步发布/订阅消息传递。开发人员可以插入任何 Dapr 支持的消息代理。
 
+
+
 **开始快乐的学习吧！**
 
 > 我们采用渐进式的教学模式，先使用kubernetes部署起来，然后每个功能逐步改造,未改造到的部分还是使用spirng cloud方式。这也体现了dapr的优势，具备渐进式框架的能力。
@@ -53,3 +81,7 @@ kubernetes部署
 渐进式改造
 
 本地调试
+
+
+
+**欢迎Fork，欢迎点赞，你们的点赞是给我最大的支持。**^-^
