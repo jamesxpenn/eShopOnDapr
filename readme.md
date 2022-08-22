@@ -1,6 +1,6 @@
 # eShop on Dapr
 
-       eShop是一个java版本的分布式应用程序**在线商城**。它的后端是由spring cloud开发，前端由vue开发。我们会一步一步带着大家将此项目改造成dapr项目。之所以考虑通过spring cloud作为切入点去介绍dapr，是因为spring cloud是目前国内进行微服务开发使用最多的框架。
+        eShop是一个java版本的分布式应用程序**在线商城**。它的后端是由spring cloud开发，前端由vue开发。我们会一步一步带着大家将此项目改造成dapr项目。之所以考虑通过spring cloud作为切入点去介绍dapr，是因为spring cloud是目前国内进行微服务开发使用最多的框架。
 
 ![](doc/images/mall1.png)
 
@@ -69,5 +69,7 @@ kubernetes部署
 渐进式改造
 
 本地调试
+
+
 
 **欢迎Fork，欢迎点赞，你们的点赞是给我最大的支持。**^-^
