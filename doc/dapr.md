@@ -628,11 +628,11 @@ spec:
 
 /home/jamesxPenn/mall/deploy/mall.user.yaml
 
-![](images\config1.png)
+![](images/config1.png)
 
 /home/jamesxPenn/mall-web/deploy/mall.web.yaml
 
-![](images\config2.png)
+![](images/config2.png)
 
 都重新部署这两个
 
@@ -652,11 +652,11 @@ zipkin       LoadBalancer   10.0.97.32     20.124.153.74    9411:30505/TCP
 
 访问zipkin后，看到如下页面：
 
-![](images\zipkin.png)
+![](images/zipkin.png)
 
 点击“show”按钮，可以看到服务调用的时长
 
-![](images\zipkin2.png)
+![](images/zipkin2.png)
 
 web  tag v0.3
 
@@ -804,11 +804,11 @@ import com.alibaba.fastjson.JSONObject;
 
 /home/jamesxPenn/mall/mall-order/src/main/java/com/chinasofti/mall/order/config/InterceptorConfig
 
-![](images\code.png)
+![](images/code.png)
 
 重新打包发布测试。进行一次购买，然后不要支付，等五分钟后再我的订单里面看订单状态是否需改为“交易关闭”。
 
-![](images\pay.png)
+![](images/pay.png)
 
 ### pubsub
 
