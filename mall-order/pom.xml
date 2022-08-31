@@ -106,6 +106,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>mall-order</finalName>
+        <finalName>mall-product</finalName>
     </build>
 </project>

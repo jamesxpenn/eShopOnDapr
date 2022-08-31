@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mall-pay
+  name: mall-pay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mall-pay
+  template:
+    metadata:
+      labels:
+        app: mall-pay
+    spec:
+      containers:
+      - image: jamesxpenn/mall-pay:v1
+        name: mall-pay
+        ports:
+        - containerPort: 9006
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: username
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: password             
+        - name: MYSQL_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: host                 
+        - name: MYSQL_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: port                 
+        - name: NACOS_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: host                     
+        - name: NACOS_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: port
+        - name: MQ_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: host
+        - name: MQ_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: port  
+        - name: MQ_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: username
+        - name: MQ_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mall-pay
+  name: mall-pay
+spec:
+  ports:
+  - port: 9006
+    protocol: TCP
+    targetPort: 9006
+  selector:
+    app: mall-pay 

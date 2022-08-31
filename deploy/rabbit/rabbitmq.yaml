@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: rmq
+  name: rmq
+spec:
+  selector:
+    matchLabels:
+      app: rmq
+  serviceName: rmq
+  replicas: 1
+
+  template:
+    metadata:
+      labels:
+        app: rmq
+    spec:
+      volumes:
+        - name: rmq
+          persistentVolumeClaim:
+            claimName: azure-managed-disk    
+      containers:
+      - name: rmq
+        image: "jamesxpenn/rabbitmq:v2"
+
+        lifecycle:
+          preStop:
+            exec:
+              command: ["rabbitmqctl", "stop"]
+
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          exec:
+            command: ["rabbitmqctl", "node_health_check"]
+
+        readinessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          periodSeconds: 1
+          failureThreshold: 10
+          exec:
+            command: ["rabbitmqctl", "node_health_check"]
+
+        ports:
+        - containerPort: 4369
+        - containerPort: 5672
+        - containerPort: 15672
+        - containerPort: 25672
+
+        volumeMounts:
+          - mountPath: /var/lib/rabbitmq
+            name: rmq
+
+        env:
+          - name: CLUSTERED
+            value: "true"
+          - name: CLUSTER_WITH
+            value: "rmq-0"
+          - name: RABBITMQ_SERVICE_DOMAIN
+            value: "rmq.default.svc.cluster.local"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmq-headless
+spec:
+  ports:
+  - port: 4369
+    name: rabbitmq-epmd
+  - port: 5672
+    name: rabbitmq-main
+  - port: 15672
+    name: rabbitmq-management
+  - port: 25672
+    name: rabbitmq-management-ssl
+  clusterIP: None
+  selector:
+    app: rmq
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rmq-external
+spec:
+  ports:
+  - port: 4369
+    name: rabbitmq-epmd
+  - port: 5672
+    name: rabbitmq-main
+  - port: 15672
+    name: rabbitmq-management
+  - port: 25672
+    name: rabbitmq-management-ssl
+  selector:
+    app: rmq
+  type: LoadBalancer

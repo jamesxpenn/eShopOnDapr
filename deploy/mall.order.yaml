@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mall-order
+  name: mall-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mall-order
+  template:
+    metadata:
+      labels:
+        app: mall-order
+    spec:
+      containers:
+      - image: jamesxpenn/mall-order:v1
+        name: mall-order
+        ports:
+        - containerPort: 9005
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: username
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: password             
+        - name: MYSQL_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: host                 
+        - name: MYSQL_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: port                 
+        - name: NACOS_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: host                     
+        - name: NACOS_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: port
+        - name: MQ_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: host
+        - name: MQ_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: port  
+        - name: MQ_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: username
+        - name: MQ_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-rabbitmq
+             key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mall-order
+  name: mall-order
+spec:
+  ports:
+  - port: 9005
+    protocol: TCP
+    targetPort: 9005
+  selector:
+    app: mall-order 

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mall-user
+  name: mall-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mall-user
+  template:
+    metadata:
+      labels:
+        app: mall-user
+    spec:
+      containers:
+      - image: jamesxpenn/mall-user:v1
+        name: mall-user
+        ports:
+        - containerPort: 9000
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: username
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: password             
+        - name: MYSQL_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: host                 
+        - name: MYSQL_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: port                 
+        - name: NACOS_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: host                     
+        - name: NACOS_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mall-user
+  name: mall-user
+spec:
+  ports:
+  - port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app: mall-user 

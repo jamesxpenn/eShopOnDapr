@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mall-cart
+  name: mall-cart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mall-cart
+  template:
+    metadata:
+      labels:
+        app: mall-cart
+    spec:
+      containers:
+      - image: jamesxpenn/mall-cart:v1
+        name: mall-cart
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9003
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: username
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: password             
+        - name: MYSQL_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: host                 
+        - name: MYSQL_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-mysql
+             key: port                 
+        - name: NACOS_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: host                     
+        - name: NACOS_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-nacos
+             key: port
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+             name: secret-redis
+             key: host
+        - name: REDIS_PORT
+          valueFrom:
+            secretKeyRef:
+             name: secret-redis
+             key: port
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+             name: secret-redis
+             key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mall-cart
+  name: mall-cart
+spec:
+  ports:
+  - port: 9003
+    protocol: TCP
+    targetPort: 9003
+  selector:
+    app: mall-cart
