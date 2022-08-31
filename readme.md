@@ -64,9 +64,9 @@
 
 [本地启动快速尝鲜](doc/quickstart.md)
 
-kubernetes部署
+[kubernetes部署](doc/kubernetes.md)
 
-渐进式改造
+[渐进式改造](doc/dapr.md)
 
 本地调试
 
