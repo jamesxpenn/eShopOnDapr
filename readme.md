@@ -62,7 +62,7 @@
 
 > 我们采用渐进式的教学模式，先使用kubernetes部署起来，然后每个功能逐步改造,未改造到的部分还是使用spirng cloud方式。这也体现了dapr的优势，具备渐进式框架的能力。
 
-[本地启动快速尝鲜](doc/quickstart.md)
+[本地启动快速尝鲜](doc/native.md)
 
 [kubernetes部署](doc/kubernetes.md)
 
